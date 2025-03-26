@@ -4,7 +4,6 @@ import { X, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { CHAT_CONFIG } from "@/config/chat";
@@ -107,14 +106,14 @@ export const ChatDialog = ({ onClose }: ChatDialogProps) => {
   return (
     <div className="bg-white rounded-lg shadow-xl flex flex-col w-80 h-96 sm:w-96 sm:h-[450px] overflow-hidden animate-scale-in">
       <div className="bg-primary p-4 text-white flex items-center justify-between">
-        <DialogHeader className="text-white">
-          <DialogTitle>Atendimento</DialogTitle>
-          <DialogDescription className="text-primary-foreground/80">
+        <div className="flex flex-col space-y-1.5 text-center sm:text-left text-white">
+          <h2 className="text-lg font-semibold leading-none tracking-tight">Atendimento</h2>
+          <p className="text-primary-foreground/80">
             {step === "form" 
               ? CHAT_CONFIG.messages.formPrompt 
               : CHAT_CONFIG.messages.chatPrompt}
-          </DialogDescription>
-        </DialogHeader>
+          </p>
+        </div>
         <Button variant="ghost" size="icon" onClick={onClose} className="text-white">
           <X className="h-5 w-5" />
         </Button>
