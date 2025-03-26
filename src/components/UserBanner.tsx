@@ -1,17 +1,31 @@
 
 import { Clock } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface UserBannerProps {
   className?: string;
 }
 
 const UserBanner = ({ className = "" }: UserBannerProps) => {
-  // Get current time in HH:MM format
-  const currentTime = new Date().toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
+  const [currentTime, setCurrentTime] = useState("");
+  
+  useEffect(() => {
+    // Update time initially
+    updateTime();
+    
+    // Update time every minute
+    const interval = setInterval(updateTime, 60000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
+  const updateTime = () => {
+    setCurrentTime(new Date().toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }));
+  };
 
   return (
     <div className={`glass-card rounded-2xl overflow-hidden animate-fade-in ${className}`}>

@@ -67,6 +67,7 @@ export const ChatDialog = ({ onClose }: ChatDialogProps) => {
     setIsLoading(true);
 
     try {
+      // Send the message with user data to the webhook
       const response = await fetch(CHAT_CONFIG.webhookUrl, {
         method: "POST",
         headers: {
