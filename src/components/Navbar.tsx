@@ -1,12 +1,13 @@
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Bus, Clock, MapPin, User, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +16,10 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
 
   return (
     <nav
@@ -72,10 +77,18 @@ const Navbar = () => {
             <Button variant="ghost" size="icon" className="rounded-full">
               <Bell className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="rounded-full">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="rounded-full"
+              onClick={() => navigate("/client")}
+            >
               <User className="h-5 w-5" />
             </Button>
-            <Button className="rounded-full px-4 py-2 animate-scale-in">
+            <Button 
+              className="rounded-full px-4 py-2 animate-scale-in"
+              onClick={handleLogin}
+            >
               Entrar
             </Button>
           </div>
@@ -135,7 +148,15 @@ const Navbar = () => {
               Sobre
             </Link>
             <div className="pt-2">
-              <Button className="w-full">Entrar</Button>
+              <Button 
+                className="w-full"
+                onClick={() => {
+                  setIsOpen(false);
+                  navigate("/login");
+                }}
+              >
+                Entrar
+              </Button>
             </div>
           </div>
         </div>

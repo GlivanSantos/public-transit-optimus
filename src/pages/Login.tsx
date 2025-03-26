@@ -1,29 +1,55 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Eye, EyeOff, Lock, Mail, ArrowLeft } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+const loginSchema = z.object({
+  email: z.string().email("Email inválido"),
+  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
+
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleLogin = (values: LoginFormValues) => {
     setIsLoading(true);
     
     // Simulate login process
     setTimeout(() => {
-      console.log("Login attempt with:", { email, password });
-      // In a real app, would connect to authentication service
+      console.log("Login attempt with:", values);
       setIsLoading(false);
       
+      toast({
+        title: "Login realizado com sucesso!",
+        description: "Você será redirecionado para sua área do cliente.",
+      });
+      
       // Redirect to client area after successful login
-      window.location.href = "/client";
+      setTimeout(() => {
+        navigate("/client");
+      }, 1000);
     }, 1500);
   };
 
@@ -47,63 +73,70 @@ const Login = () => {
                 </p>
               </div>
               
-              <form onSubmit={handleLogin}>
-                <div className="space-y-5">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-1">
-                      E-mail
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Mail className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        id="email"
-                        type="email"
-                        placeholder="seu.email@exemplo.com"
-                        className="pl-10 w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                      />
-                    </div>
-                  </div>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(handleLogin)} className="space-y-5">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>E-mail</FormLabel>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Mail className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <FormControl>
+                            <Input
+                              placeholder="seu.email@exemplo.com"
+                              className="pl-10"
+                              {...field}
+                            />
+                          </FormControl>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label htmlFor="password" className="block text-sm font-medium">
-                        Senha
-                      </label>
-                      <Link to="/forgot-password" className="text-xs text-primary hover:underline">
-                        Esqueceu a senha?
-                      </Link>
-                    </div>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Lock className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        placeholder="Digite sua senha"
-                        className="pl-10 w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                      />
-                      <button
-                        type="button"
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-5 w-5" />
-                        ) : (
-                          <Eye className="h-5 w-5" />
-                        )}
-                      </button>
-                    </div>
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center justify-between mb-1">
+                          <FormLabel>Senha</FormLabel>
+                          <Link to="/forgot-password" className="text-xs text-primary hover:underline">
+                            Esqueceu a senha?
+                          </Link>
+                        </div>
+                        <div className="relative">
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <Lock className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <FormControl>
+                            <Input
+                              type={showPassword ? "text" : "password"}
+                              placeholder="Digite sua senha"
+                              className="pl-10"
+                              {...field}
+                            />
+                          </FormControl>
+                          <button
+                            type="button"
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-5 w-5" />
+                            ) : (
+                              <Eye className="h-5 w-5" />
+                            )}
+                          </button>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   
                   <Button
                     type="submit"
@@ -122,17 +155,17 @@ const Login = () => {
                       "Entrar"
                     )}
                   </Button>
-                </div>
-              </form>
-              
-              <div className="mt-6 text-center">
-                <p className="text-sm text-gray-600">
-                  Ainda não tem uma conta?{" "}
-                  <Link to="/signup" className="text-primary font-medium hover:underline">
-                    Criar conta
-                  </Link>
-                </p>
-              </div>
+                  
+                  <div className="mt-6 text-center">
+                    <p className="text-sm text-gray-600">
+                      Ainda não tem uma conta?{" "}
+                      <Link to="/signup" className="text-primary font-medium hover:underline">
+                        Criar conta
+                      </Link>
+                    </p>
+                  </div>
+                </form>
+              </Form>
             </div>
           </div>
         </div>
