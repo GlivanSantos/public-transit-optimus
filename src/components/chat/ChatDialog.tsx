@@ -67,32 +67,73 @@ export const ChatDialog = ({ onClose }: ChatDialogProps) => {
     setIsLoading(true);
 
     try {
-      // Send the message with user data to the webhook
+      // Create the payload with the message and user data
+      const payload = {
+        message: userMessage.content,
+        name,
+        phone,
+        timestamp: userMessage.timestamp,
+      };
+      
+      console.log("Sending message to webhook:", payload);
+      
+      // Try to use fetch with standard CORS first
       const response = await fetch(CHAT_CONFIG.webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          message: userMessage.content,
-          name,
-          phone,
-          timestamp: userMessage.timestamp,
-        }),
-        mode: "no-cors", // Add this to handle CORS issues
+        body: JSON.stringify(payload),
       });
-
-      // For demo purposes, we'll just simulate a response
-      // In a real implementation, you'd get the response from the webhook
-      setTimeout(() => {
+      
+      if (response.ok) {
+        try {
+          // Try to parse the response as JSON
+          const responseData = await response.json();
+          console.log("Webhook response:", responseData);
+          
+          // Add the response message to the chat
+          const assistantMessage: Message = {
+            role: "assistant",
+            content: responseData.message || responseData.response || responseData.reply || "Mensagem recebida.",
+            timestamp: new Date(),
+          };
+          
+          setMessages((prev) => [...prev, assistantMessage]);
+        } catch (error) {
+          console.log("Non-JSON response from webhook:", response);
+          // If we can't parse the JSON, use response text
+          const text = await response.text();
+          
+          const assistantMessage: Message = {
+            role: "assistant",
+            content: text || "Mensagem recebida. Aguarde um momento.",
+            timestamp: new Date(),
+          };
+          
+          setMessages((prev) => [...prev, assistantMessage]);
+        }
+      } else {
+        // Fallback to no-cors mode if standard request fails
+        console.log("Standard fetch failed, trying no-cors mode");
+        await fetch(CHAT_CONFIG.webhookUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+          mode: "no-cors",
+        });
+        
+        // Since we can't get the response with no-cors, use a default message
         const assistantMessage: Message = {
           role: "assistant",
-          content: "Esta é uma resposta simulada. Em uma implementação real, esta mensagem viria do seu webhook com a resposta da IA.",
+          content: "Mensagem enviada com sucesso. Aguardando resposta...",
           timestamp: new Date(),
         };
+        
         setMessages((prev) => [...prev, assistantMessage]);
-        setIsLoading(false);
-      }, 1000);
+      }
     } catch (error) {
       console.error("Error sending message:", error);
       toast({
@@ -100,6 +141,16 @@ export const ChatDialog = ({ onClose }: ChatDialogProps) => {
         description: CHAT_CONFIG.messages.error,
         variant: "destructive",
       });
+      
+      // Add a fallback message to inform the user
+      const errorMessage: Message = {
+        role: "assistant",
+        content: "Desculpe, tivemos um problema ao processar sua mensagem. Por favor, tente novamente mais tarde.",
+        timestamp: new Date(),
+      };
+      
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
     }
   };
