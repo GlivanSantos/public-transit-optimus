@@ -25,6 +25,17 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.75rem;
+    --mint: 142 100% 50%;
+    --mint-50: 140 100% 95%;
+    --mint-100: 141 100% 90%;
+    --mint-200: 141 100% 80%;
+    --mint-300: 142 100% 70%;
+    --mint-400: 142 100% 60%;
+    --mint-500: 142 100% 50%;
+    --mint-600: 143 100% 40%;
+    --mint-700: 143 100% 30%;
+    --mint-800: 144 100% 20%;
+    --mint-900: 145 100% 10%;
   }
 
   .dark {
@@ -47,6 +58,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
+    --mint: 142 70% 45%;
   }
 }
 
@@ -95,6 +107,29 @@
 
 .delay-150 {
   animation-delay: 150ms;
+}
+
+.mint-gradient {
+  background: linear-gradient(90deg, #00FF66 0%, #00E676 50%, #00D68F 100%);
+}
+
+.mint-glow {
+  text-shadow: 0 0 5px rgba(0, 255, 102, 0.7);
+}
+
+.mint-border {
+  border-color: #00FF66;
+  box-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+}
+
+.mint-button {
+  background-color: #00FF66;
+  transition: all 0.3s ease;
+}
+
+.mint-button:hover {
+  background-color: #00D68F;
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.6);
 }
 
 @keyframes fadeIn {

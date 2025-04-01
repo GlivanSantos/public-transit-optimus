@@ -33,7 +33,7 @@ const Map = () => {
     <div className="min-h-screen font-inter">
       <Navbar />
 
-      <section className="pt-28 pb-10 bg-gradient-to-b from-primary/5 to-white">
+      <section className="pt-28 pb-10 bg-gradient-to-b from-mint/5 to-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
             <div>
@@ -47,7 +47,7 @@ const Map = () => {
                 <Filter className="h-4 w-4" />
                 <span>Filtrar Linhas</span>
               </Button>
-              <Button className="flex items-center gap-2">
+              <Button className="mint-button flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
                 <span>Minha Localização</span>
               </Button>
@@ -61,8 +61,8 @@ const Map = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 animate-on-scroll opacity-0">
             <div className="glass-card p-4 rounded-xl">
               <div className="flex items-center gap-3 mb-3">
-                <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
-                  <Bus className="h-5 w-5 text-green-600" />
+                <div className="h-10 w-10 rounded-full bg-mint/10 flex items-center justify-center">
+                  <Bus className="h-5 w-5 text-mint" />
                 </div>
                 <div>
                   <h3 className="font-medium">Ônibus Ativos</h3>

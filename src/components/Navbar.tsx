@@ -36,7 +36,7 @@ const Navbar = () => {
             className="flex items-center space-x-2 text-primary font-semibold"
           >
             <Bus className="h-6 w-6 animate-bus-move" />
-            <span className="text-xl font-bold">TransitOptimus</span>
+            <span className="text-xl font-bold">TransJet</span>
           </Link>
 
           {/* Desktop Navigation */}

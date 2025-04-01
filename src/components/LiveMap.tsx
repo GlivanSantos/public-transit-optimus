@@ -61,134 +61,149 @@ const LiveMap = () => {
         </div>
       ) : (
         <div className="relative w-full h-full">
-          {/* Map placeholder - would be replaced with an actual map library like Google Maps or Mapbox */}
-          <div className="absolute inset-0 bg-blue-50">
-            <div className="w-full h-full relative">
-              {/* Stylized map visualization */}
-              <div className="absolute inset-0 grid grid-cols-12 grid-rows-12 opacity-30">
-                {Array.from({ length: 12 }).map((_, rowIndex) => (
-                  Array.from({ length: 12 }).map((_, colIndex) => (
-                    <div 
-                      key={`${rowIndex}-${colIndex}`} 
-                      className="border border-blue-200"
-                    />
-                  ))
-                ))}
-              </div>
-
-              {/* City outline for Aracaju */}
-              <svg 
-                viewBox="0 0 100 100" 
-                className="absolute inset-0 w-full h-full"
-                style={{ opacity: 0.2 }}
-              >
-                {/* Simplified outline of Aracaju */}
-                <path
-                  d="M30,20 C35,15 45,10 55,15 C65,20 70,25 75,35 C80,45 85,55 80,65 C75,75 65,80 55,85 C45,90 35,85 25,80 C15,75 10,65 15,55 C20,45 25,25 30,20 Z"
-                  fill="none"
-                  stroke="#3B82F6"
-                  strokeWidth="1"
-                />
-                
-                {/* Main avenues */}
-                <path
-                  d="M30,35 L70,65"
-                  stroke="#3B82F6"
-                  strokeWidth="0.5"
-                />
-                <path
-                  d="M40,25 L60,75"
-                  stroke="#3B82F6"
-                  strokeWidth="0.5"
-                />
-                <path
-                  d="M25,45 L75,55"
-                  stroke="#3B82F6"
-                  strokeWidth="0.5"
-                />
-                
-                {/* Coast line */}
-                <path
-                  d="M60,15 C65,25 70,35 75,45 C80,55 75,65 70,75"
-                  fill="none"
-                  stroke="#3B82F6"
-                  strokeWidth="1.5"
-                />
-                
-                {/* River */}
-                <path
-                  d="M30,30 C35,40 40,50 35,60 C30,70 25,75 20,80"
-                  fill="none"
-                  stroke="#3B82F6"
-                  strokeWidth="1"
-                />
-              </svg>
-              
-              {/* Mock bus stops for Aracaju */}
-              {mockBusStops.map((stop) => (
-                <div 
-                  key={stop.id}
-                  className={`absolute w-4 h-4 bg-white border-2 border-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${
-                    selectedStop === stop.id ? "scale-150 z-10" : "hover:scale-125"
-                  }`}
-                  style={{ 
-                    left: `${((stop.lng + 37.11) / 0.1) * 100}%`, 
-                    top: `${((stop.lat + 11) / 0.1) * 100}%`,
-                  }}
-                  title={stop.name}
-                  onClick={() => setSelectedStop(selectedStop === stop.id ? null : stop.id)}
-                >
-                  {selectedStop === stop.id && (
-                    <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20">
-                      {stop.name}
-                    </div>
-                  )}
-                </div>
-              ))}
-              
-              {/* Mock buses for Aracaju */}
-              {mockBuses.map((bus) => {
-                // Add subtle movement effect
-                const jitter = isMoving ? { 
-                  lat: bus.lat + (Math.random() * 0.001 - 0.0005),
-                  lng: bus.lng + (Math.random() * 0.001 - 0.0005) 
-                } : { lat: bus.lat, lng: bus.lng };
-                
-                return (
-                  <div 
-                    key={bus.id}
-                    className={`absolute w-6 h-6 rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-xs font-bold bg-white shadow-md cursor-pointer transition-all ${
-                      selectedBus === bus.id ? "scale-150 z-10" : "hover:scale-110"
-                    } ${isMoving ? "animate-pulse-slow" : ""}`}
-                    style={{ 
-                      left: `${((jitter.lng + 37.11) / 0.1) * 100}%`, 
-                      top: `${((jitter.lat + 11) / 0.1) * 100}%`,
-                      boxShadow: `0 0 0 4px rgba(59, 130, 246, 0.2)`,
-                      borderColor: bus.occupancy === "low" ? "green" : bus.occupancy === "medium" ? "yellow" : "red",
-                      backgroundColor: bus.occupancy === "low" ? "rgba(34, 197, 94, 0.2)" : bus.occupancy === "medium" ? "rgba(234, 179, 8, 0.2)" : "rgba(239, 68, 68, 0.2)",
-                      color: bus.occupancy === "low" ? "rgb(34, 197, 94)" : bus.occupancy === "medium" ? "rgb(234, 179, 8)" : "rgb(239, 68, 68)"
-                    }}
-                    title={`Linha ${bus.line} - ${bus.destination}`}
-                    onClick={() => setSelectedBus(selectedBus === bus.id ? null : bus.id)}
-                  >
-                    {bus.line}
-                    
-                    {selectedBus === bus.id && (
-                      <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20">
-                        <div>Linha {bus.line}</div>
-                        <div className="text-gray-500">→ {bus.destination}</div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+          {/* Map of Aracaju */}
+          <div className="absolute inset-0">
+            <img 
+              src="https://cdn.discordapp.com/attachments/1244467760173375549/1254838142785134632/aracaju_map.jpg?ex=668e8ace&is=668d3944&hm=cf5bef7357962af24b07b8b2a2e410d379ebb66c2970ed5c841b6632b7f00a62&" 
+              alt="Mapa de Aracaju" 
+              className="w-full h-full object-cover opacity-70"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/10"></div>
           </div>
+          
+          <div className="absolute inset-0 grid grid-cols-12 grid-rows-12 opacity-30">
+            {Array.from({ length: 12 }).map((_, rowIndex) => (
+              Array.from({ length: 12 }).map((_, colIndex) => (
+                <div 
+                  key={`${rowIndex}-${colIndex}`} 
+                  className="border border-blue-200"
+                />
+              ))
+            ))}
+          </div>
+
+          {/* Main routes and landmarks overlay */}
+          <svg 
+            viewBox="0 0 100 100" 
+            className="absolute inset-0 w-full h-full"
+            style={{ opacity: 0.4 }}
+          >
+            {/* Main avenues of Aracaju */}
+            <path
+              d="M30,35 L70,65"
+              stroke="#3B82F6"
+              strokeWidth="0.5"
+            />
+            <path
+              d="M40,25 L60,75"
+              stroke="#3B82F6"
+              strokeWidth="0.5"
+            />
+            <path
+              d="M25,45 L75,55"
+              stroke="#3B82F6"
+              strokeWidth="0.5"
+            />
+            
+            {/* Rio Sergipe */}
+            <path
+              d="M60,15 C65,25 70,35 75,45 C80,55 75,65 70,75"
+              fill="none"
+              stroke="#3B82F6"
+              strokeWidth="1.5"
+            />
+            
+            {/* Avenida Beira Mar */}
+            <path
+              d="M65,20 C67,30 68,40 65,50 C62,60 60,70 55,80"
+              fill="none"
+              stroke="#00FF66"
+              strokeWidth="1"
+              strokeDasharray="2"
+            />
+            
+            {/* Avenida Hermes Fontes */}
+            <path
+              d="M30,30 L50,50 L70,40"
+              fill="none"
+              stroke="#00FF66"
+              strokeWidth="1"
+              strokeDasharray="2"
+            />
+            
+            {/* Avenida Tancredo Neves */}
+            <path
+              d="M20,60 L40,60 L60,55 L75,45"
+              fill="none"
+              stroke="#00FF66"
+              strokeWidth="1"
+              strokeDasharray="2"
+            />
+          </svg>
+              
+          {/* Bus stops */}
+          {mockBusStops.map((stop) => (
+            <div 
+              key={stop.id}
+              className={`absolute w-4 h-4 bg-white border-2 border-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${
+                selectedStop === stop.id ? "scale-150 z-10" : "hover:scale-125"
+              }`}
+              style={{ 
+                left: `${((stop.lng + 37.11) / 0.1) * 100}%`, 
+                top: `${((stop.lat + 11) / 0.1) * 100}%`,
+              }}
+              title={stop.name}
+              onClick={() => setSelectedStop(selectedStop === stop.id ? null : stop.id)}
+            >
+              {selectedStop === stop.id && (
+                <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20">
+                  {stop.name}
+                </div>
+              )}
+            </div>
+          ))}
+          
+          {/* Buses */}
+          {mockBuses.map((bus) => {
+            // Add subtle movement effect
+            const jitter = isMoving ? { 
+              lat: bus.lat + (Math.random() * 0.001 - 0.0005),
+              lng: bus.lng + (Math.random() * 0.001 - 0.0005) 
+            } : { lat: bus.lat, lng: bus.lng };
+            
+            return (
+              <div 
+                key={bus.id}
+                className={`absolute w-6 h-6 rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-xs font-bold bg-white shadow-md cursor-pointer transition-all ${
+                  selectedBus === bus.id ? "scale-150 z-10" : "hover:scale-110"
+                } ${isMoving ? "animate-pulse-slow" : ""}`}
+                style={{ 
+                  left: `${((jitter.lng + 37.11) / 0.1) * 100}%`, 
+                  top: `${((jitter.lat + 11) / 0.1) * 100}%`,
+                  boxShadow: `0 0 0 4px rgba(59, 130, 246, 0.2)`,
+                  borderColor: bus.occupancy === "low" ? "#00FF66" : bus.occupancy === "medium" ? "yellow" : "red",
+                  backgroundColor: bus.occupancy === "low" ? "rgba(0, 255, 102, 0.2)" : bus.occupancy === "medium" ? "rgba(234, 179, 8, 0.2)" : "rgba(239, 68, 68, 0.2)",
+                  color: bus.occupancy === "low" ? "#00FF66" : bus.occupancy === "medium" ? "rgb(234, 179, 8)" : "rgb(239, 68, 68)"
+                }}
+                title={`Linha ${bus.line} - ${bus.destination}`}
+                onClick={() => setSelectedBus(selectedBus === bus.id ? null : bus.id)}
+              >
+                {bus.line}
+                
+                {selectedBus === bus.id && (
+                  <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20">
+                    <div>Linha {bus.line}</div>
+                    <div className="text-gray-500">→ {bus.destination}</div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
           
           {/* Map overlay with UI controls */}
           <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
             <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-sm px-4 py-2 text-sm font-medium flex items-center">
-              <MapPin className="h-4 w-4 mr-2 text-primary" />
+              <MapPin className="h-4 w-4 mr-2 text-mint" />
               Aracaju, SE
             </div>
             <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-sm px-3 py-1">
@@ -199,6 +214,25 @@ const LiveMap = () => {
                 <button className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-100 transition-colors">
                   <span className="text-xl font-medium">−</span>
                 </button>
+              </div>
+            </div>
+          </div>
+          
+          {/* Map legend */}
+          <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm px-3 py-2">
+            <div className="text-xs font-medium mb-1">Ocupação</div>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded-full bg-mint/30 border border-mint"></div>
+                <span className="text-xs">Baixa</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded-full bg-yellow-300/30 border border-yellow-400"></div>
+                <span className="text-xs">Média</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded-full bg-red-500/30 border border-red-500"></div>
+                <span className="text-xs">Alta</span>
               </div>
             </div>
           </div>
