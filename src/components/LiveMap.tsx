@@ -54,99 +54,28 @@ const LiveMap = () => {
   }, [loading]);
 
   return (
-    <div className="relative w-full h-[400px] md:h-[500px] bg-gray-100 rounded-2xl overflow-hidden animate-fade-in">
+    <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden animate-fade-in">
       {loading ? (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+          <div className="w-10 h-10 border-4 border-mint/20 border-t-mint rounded-full animate-spin"></div>
         </div>
       ) : (
         <div className="relative w-full h-full">
           {/* Map of Aracaju */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gray-100">
             <img 
-              src="https://cdn.discordapp.com/attachments/1244467760173375549/1254838142785134632/aracaju_map.jpg?ex=668e8ace&is=668d3944&hm=cf5bef7357962af24b07b8b2a2e410d379ebb66c2970ed5c841b6632b7f00a62&" 
+              src="/lovable-uploads/01ecac51-d8a0-4b9d-9c7f-dd782b4e4907.png" 
               alt="Mapa de Aracaju" 
-              className="w-full h-full object-cover opacity-70"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/10"></div>
           </div>
           
-          <div className="absolute inset-0 grid grid-cols-12 grid-rows-12 opacity-30">
-            {Array.from({ length: 12 }).map((_, rowIndex) => (
-              Array.from({ length: 12 }).map((_, colIndex) => (
-                <div 
-                  key={`${rowIndex}-${colIndex}`} 
-                  className="border border-blue-200"
-                />
-              ))
-            ))}
-          </div>
-
-          {/* Main routes and landmarks overlay */}
-          <svg 
-            viewBox="0 0 100 100" 
-            className="absolute inset-0 w-full h-full"
-            style={{ opacity: 0.4 }}
-          >
-            {/* Main avenues of Aracaju */}
-            <path
-              d="M30,35 L70,65"
-              stroke="#3B82F6"
-              strokeWidth="0.5"
-            />
-            <path
-              d="M40,25 L60,75"
-              stroke="#3B82F6"
-              strokeWidth="0.5"
-            />
-            <path
-              d="M25,45 L75,55"
-              stroke="#3B82F6"
-              strokeWidth="0.5"
-            />
-            
-            {/* Rio Sergipe */}
-            <path
-              d="M60,15 C65,25 70,35 75,45 C80,55 75,65 70,75"
-              fill="none"
-              stroke="#3B82F6"
-              strokeWidth="1.5"
-            />
-            
-            {/* Avenida Beira Mar */}
-            <path
-              d="M65,20 C67,30 68,40 65,50 C62,60 60,70 55,80"
-              fill="none"
-              stroke="#00FF66"
-              strokeWidth="1"
-              strokeDasharray="2"
-            />
-            
-            {/* Avenida Hermes Fontes */}
-            <path
-              d="M30,30 L50,50 L70,40"
-              fill="none"
-              stroke="#00FF66"
-              strokeWidth="1"
-              strokeDasharray="2"
-            />
-            
-            {/* Avenida Tancredo Neves */}
-            <path
-              d="M20,60 L40,60 L60,55 L75,45"
-              fill="none"
-              stroke="#00FF66"
-              strokeWidth="1"
-              strokeDasharray="2"
-            />
-          </svg>
-              
           {/* Bus stops */}
           {mockBusStops.map((stop) => (
             <div 
               key={stop.id}
-              className={`absolute w-4 h-4 bg-white border-2 border-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${
-                selectedStop === stop.id ? "scale-150 z-10" : "hover:scale-125"
+              className={`absolute w-4 h-4 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${
+                selectedStop === stop.id ? "scale-150 z-10 shadow-lg ring-2 ring-mint" : "border border-mint hover:scale-125"
               }`}
               style={{ 
                 left: `${((stop.lng + 37.11) / 0.1) * 100}%`, 
@@ -156,7 +85,7 @@ const LiveMap = () => {
               onClick={() => setSelectedStop(selectedStop === stop.id ? null : stop.id)}
             >
               {selectedStop === stop.id && (
-                <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20">
+                <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20 border border-mint/20">
                   {stop.name}
                 </div>
               )}
@@ -171,19 +100,31 @@ const LiveMap = () => {
               lng: bus.lng + (Math.random() * 0.001 - 0.0005) 
             } : { lat: bus.lat, lng: bus.lng };
             
+            const getBusColor = (occupancy: string) => {
+              switch(occupancy) {
+                case "low": return "#00FF66";
+                case "medium": return "#FFD700";
+                case "high": return "#FF4D4D";
+                default: return "#00FF66";
+              }
+            };
+            
+            const busColor = getBusColor(bus.occupancy);
+            
             return (
               <div 
                 key={bus.id}
-                className={`absolute w-6 h-6 rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-xs font-bold bg-white shadow-md cursor-pointer transition-all ${
+                className={`absolute w-6 h-6 rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-xs font-bold shadow-md cursor-pointer transition-all ${
                   selectedBus === bus.id ? "scale-150 z-10" : "hover:scale-110"
                 } ${isMoving ? "animate-pulse-slow" : ""}`}
                 style={{ 
                   left: `${((jitter.lng + 37.11) / 0.1) * 100}%`, 
                   top: `${((jitter.lat + 11) / 0.1) * 100}%`,
-                  boxShadow: `0 0 0 4px rgba(59, 130, 246, 0.2)`,
-                  borderColor: bus.occupancy === "low" ? "#00FF66" : bus.occupancy === "medium" ? "yellow" : "red",
-                  backgroundColor: bus.occupancy === "low" ? "rgba(0, 255, 102, 0.2)" : bus.occupancy === "medium" ? "rgba(234, 179, 8, 0.2)" : "rgba(239, 68, 68, 0.2)",
-                  color: bus.occupancy === "low" ? "#00FF66" : bus.occupancy === "medium" ? "rgb(234, 179, 8)" : "rgb(239, 68, 68)"
+                  backgroundColor: "white",
+                  boxShadow: `0 0 0 2px ${busColor}`,
+                  color: busColor,
+                  borderWidth: "1px",
+                  borderColor: busColor
                 }}
                 title={`Linha ${bus.line} - ${bus.destination}`}
                 onClick={() => setSelectedBus(selectedBus === bus.id ? null : bus.id)}
@@ -191,9 +132,9 @@ const LiveMap = () => {
                 {bus.line}
                 
                 {selectedBus === bus.id && (
-                  <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20">
-                    <div>Linha {bus.line}</div>
-                    <div className="text-gray-500">→ {bus.destination}</div>
+                  <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20 border border-gray-200">
+                    <div className="font-medium">Linha {bus.line}</div>
+                    <div className="text-gray-600">→ {bus.destination}</div>
                   </div>
                 )}
               </div>
@@ -202,11 +143,11 @@ const LiveMap = () => {
           
           {/* Map overlay with UI controls */}
           <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
-            <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-sm px-4 py-2 text-sm font-medium flex items-center">
+            <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-md px-4 py-2 text-sm font-medium flex items-center border border-gray-100">
               <MapPin className="h-4 w-4 mr-2 text-mint" />
               Aracaju, SE
             </div>
-            <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-sm px-3 py-1">
+            <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-md px-3 py-1 border border-gray-100">
               <div className="flex items-center space-x-1">
                 <button className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-100 transition-colors">
                   <span className="text-xl font-medium">+</span>
@@ -219,19 +160,19 @@ const LiveMap = () => {
           </div>
           
           {/* Map legend */}
-          <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm px-3 py-2">
-            <div className="text-xs font-medium mb-1">Ocupação</div>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded-full bg-mint/30 border border-mint"></div>
+          <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-md px-4 py-3 border border-gray-100">
+            <div className="text-sm font-medium mb-2">Ocupação</div>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-white border-2" style={{ borderColor: "#00FF66" }}></div>
                 <span className="text-xs">Baixa</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded-full bg-yellow-300/30 border border-yellow-400"></div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-white border-2" style={{ borderColor: "#FFD700" }}></div>
                 <span className="text-xs">Média</span>
               </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded-full bg-red-500/30 border border-red-500"></div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-white border-2" style={{ borderColor: "#FF4D4D" }}></div>
                 <span className="text-xs">Alta</span>
               </div>
             </div>
