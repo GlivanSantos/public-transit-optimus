@@ -57,7 +57,7 @@ const LiveMap = () => {
     <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden animate-fade-in">
       {loading ? (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-          <div className="w-10 h-10 border-4 border-mint/20 border-t-mint rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
         </div>
       ) : (
         <div className="relative w-full h-full">
@@ -75,7 +75,7 @@ const LiveMap = () => {
             <div 
               key={stop.id}
               className={`absolute w-4 h-4 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all ${
-                selectedStop === stop.id ? "scale-150 z-10 shadow-lg ring-2 ring-mint" : "border border-mint hover:scale-125"
+                selectedStop === stop.id ? "scale-150 z-10 shadow-lg ring-2 ring-primary" : "border border-primary hover:scale-125"
               }`}
               style={{ 
                 left: `${((stop.lng + 37.11) / 0.1) * 100}%`, 
@@ -85,7 +85,7 @@ const LiveMap = () => {
               onClick={() => setSelectedStop(selectedStop === stop.id ? null : stop.id)}
             >
               {selectedStop === stop.id && (
-                <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20 border border-mint/20">
+                <div className="absolute whitespace-nowrap bottom-full left-1/2 transform -translate-x-1/2 mb-1 bg-white px-2 py-1 rounded text-xs font-medium shadow z-20 border border-primary/20">
                   {stop.name}
                 </div>
               )}
@@ -102,10 +102,10 @@ const LiveMap = () => {
             
             const getBusColor = (occupancy: string) => {
               switch(occupancy) {
-                case "low": return "#00FF66";
-                case "medium": return "#FFD700";
-                case "high": return "#FF4D4D";
-                default: return "#00FF66";
+                case "low": return "#4CAF50"; // Green
+                case "medium": return "#FFC107"; // Yellow
+                case "high": return "#FF5252"; // Red
+                default: return "#4CAF50";
               }
             };
             
@@ -144,7 +144,7 @@ const LiveMap = () => {
           {/* Map overlay with UI controls */}
           <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
             <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-md px-4 py-2 text-sm font-medium flex items-center border border-gray-100">
-              <MapPin className="h-4 w-4 mr-2 text-mint" />
+              <MapPin className="h-4 w-4 mr-2 text-primary" />
               Aracaju, SE
             </div>
             <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-md px-3 py-1 border border-gray-100">
@@ -164,15 +164,15 @@ const LiveMap = () => {
             <div className="text-sm font-medium mb-2">Ocupação</div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-white border-2" style={{ borderColor: "#00FF66" }}></div>
+                <div className="w-3 h-3 rounded-full bg-white border-2" style={{ borderColor: "#4CAF50" }}></div>
                 <span className="text-xs">Baixa</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-white border-2" style={{ borderColor: "#FFD700" }}></div>
+                <div className="w-3 h-3 rounded-full bg-white border-2" style={{ borderColor: "#FFC107" }}></div>
                 <span className="text-xs">Média</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-white border-2" style={{ borderColor: "#FF4D4D" }}></div>
+                <div className="w-3 h-3 rounded-full bg-white border-2" style={{ borderColor: "#FF5252" }}></div>
                 <span className="text-xs">Alta</span>
               </div>
             </div>
