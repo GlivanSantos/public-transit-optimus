@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -48,12 +47,12 @@ const Terms = () => {
             <div className="prose prose-lg max-w-none animate-on-scroll opacity-0">
               <h2>1. Aceitação dos Termos</h2>
               <p>
-                Ao acessar e utilizar o TransitOptimus ("o Serviço"), você concorda com estes Termos de Uso. Se não concordar com qualquer parte destes termos, você não deve utilizar o Serviço.
+                Ao acessar e utilizar o TransJet ("o Serviço"), você concorda com estes Termos de Uso. Se não concordar com qualquer parte destes termos, você não deve utilizar o Serviço.
               </p>
 
               <h2>2. Descrição do Serviço</h2>
               <p>
-                O TransitOptimus é uma plataforma que fornece informações sobre o transporte público em Aracaju, incluindo horários de ônibus, planejamento de rotas, localização em tempo real dos veículos e dados sobre ocupação.
+                O TransJet é uma plataforma que fornece informações sobre o transporte público em Aracaju, incluindo horários de ônibus, planejamento de rotas, localização em tempo real dos veículos e dados sobre ocupação.
               </p>
 
               <h2>3. Cadastro e Contas</h2>
@@ -84,7 +83,7 @@ const Terms = () => {
 
               <h2>5. Conteúdo e Propriedade Intelectual</h2>
               <p>
-                Todo o conteúdo disponibilizado através do Serviço, incluindo textos, gráficos, logotipos, ícones, imagens e dados, é de propriedade do TransitOptimus ou de seus licenciadores e é protegido por leis de direitos autorais e propriedade intelectual.
+                Todo o conteúdo disponibilizado através do Serviço, incluindo textos, gráficos, logotipos, ícones, imagens e dados, é de propriedade do TransJet ou de seus licenciadores e é protegido por leis de direitos autorais e propriedade intelectual.
               </p>
               <p>
                 Você não poderá modificar, reproduzir, distribuir, criar obras derivadas, exibir publicamente ou explorar comercialmente qualquer conteúdo do Serviço sem autorização prévia por escrito.
@@ -113,7 +112,7 @@ const Terms = () => {
 
               <h2>9. Limitação de Responsabilidade</h2>
               <p>
-                Em nenhuma circunstância, o TransitOptimus, seus diretores, funcionários ou agentes serão responsáveis por quaisquer danos indiretos, incidentais, especiais, consequenciais ou punitivos, incluindo perda de lucros, dados ou uso, resultantes de sua utilização do Serviço.
+                Em nenhuma circunstância, o TransJet, seus diretores, funcionários ou agentes serão responsáveis por quaisquer danos indiretos, incidentais, especiais, consequenciais ou punitivos, incluindo perda de lucros, dados ou uso, resultantes de sua utilização do Serviço.
               </p>
 
               <h2>10. Lei Aplicável</h2>
@@ -123,7 +122,7 @@ const Terms = () => {
 
               <h2>11. Contato</h2>
               <p>
-                Se você tiver perguntas sobre estes Termos, entre em contato conosco através do e-mail juridico@transitoptimus.com.br.
+                Se você tiver perguntas sobre estes Termos, entre em contato conosco através do e-mail juridico@transjet.com.br.
               </p>
             </div>
 

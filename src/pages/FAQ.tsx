@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -33,8 +32,8 @@ const FAQ = () => {
 
   const faqs = [
     {
-      question: "Como funciona o aplicativo TransitOptimus?",
-      answer: "O TransitOptimus é uma plataforma que oferece informações em tempo real sobre o transporte público em Aracaju. Você pode consultar horários de ônibus, planejar suas rotas, acompanhar a localização dos veículos no mapa ao vivo e visualizar o nível de ocupação dos ônibus, tudo isso para tornar sua experiência de transporte público mais eficiente e confortável."
+      question: "Como funciona o aplicativo TransJet?",
+      answer: "O TransJet é uma plataforma que oferece informações em tempo real sobre o transporte público em Aracaju. Você pode consultar horários de ônibus, planejar suas rotas, acompanhar a localização dos veículos no mapa ao vivo e visualizar o nível de ocupação dos ônibus, tudo isso para tornar sua experiência de transporte público mais eficiente e confortável."
     },
     {
       question: "É necessário criar uma conta para usar o aplicativo?",
@@ -50,7 +49,7 @@ const FAQ = () => {
     },
     {
       question: "Como posso relatar um problema ou enviar sugestões?",
-      answer: "Você pode relatar problemas ou enviar sugestões através da seção 'Contato' no aplicativo. Sua opinião é muito importante para melhorarmos continuamente o serviço. Alternativamente, você também pode enviar um e-mail para suporte@transitoptimus.com.br ou usar nossas redes sociais para entrar em contato."
+      answer: "Você pode relatar problemas ou enviar sugestões através da seção 'Contato' no aplicativo. Sua opinião é muito importante para melhorarmos continuamente o serviço. Alternativamente, você também pode enviar um e-mail para suporte@transjet.com.br ou usar nossas redes sociais para entrar em contato."
     },
     {
       question: "O aplicativo funciona offline?",
@@ -61,8 +60,8 @@ const FAQ = () => {
       answer: "Nossas rotas sugeridas consideram múltiplos fatores: tempo total de viagem (incluindo esperas e transbordos), número de transbordos necessários, distância a pé, nível de conforto (ocupação dos veículos) e preferências que você configurar no aplicativo, como maximizar conforto ou minimizar tempo."
     },
     {
-      question: "Quais cidades são atendidas pelo TransitOptimus?",
-      answer: "Atualmente, o TransitOptimus está disponível apenas para a cidade de Aracaju e sua região metropolitana. Temos planos de expansão para outras cidades brasileiras no futuro próximo."
+      question: "Quais cidades são atendidas pelo TransJet?",
+      answer: "Atualmente, o TransJet está disponível apenas para a cidade de Aracaju e sua região metropolitana. Temos planos de expansão para outras cidades brasileiras no futuro próximo."
     }
   ];
 
@@ -79,7 +78,7 @@ const FAQ = () => {
         <div className="container mx-auto px-4">
           <h1 className="text-3xl md:text-4xl font-bold mb-6 text-center">Perguntas Frequentes</h1>
           <p className="text-lg text-gray-600 mb-8 text-center max-w-3xl mx-auto">
-            Encontre respostas para as dúvidas mais comuns sobre o TransitOptimus e o sistema de transporte público de Aracaju.
+            Encontre respostas para as dúvidas mais comuns sobre o TransJet e o sistema de transporte público de Aracaju.
           </p>
 
           <div className="max-w-xl mx-auto mb-10 animate-on-scroll opacity-0">

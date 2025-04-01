@@ -35,7 +35,7 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-6 animate-fade-in">
-              Sobre o TransitOptimus
+              Sobre o TransJet
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in delay-100">
               Transformando o transporte público em Aracaju
@@ -87,7 +87,7 @@ const About = () => {
               <div className="glass-card rounded-xl p-6 mb-8">
                 <h3 className="text-xl font-bold mb-4">Parceria com a SMTT Aracaju</h3>
                 <p className="text-gray-600">
-                  O TransitOptimus é desenvolvido em parceria com a Superintendência Municipal 
+                  O TransJet é desenvolvido em parceria com a Superintendência Municipal 
                   de Transportes e Trânsito (SMTT) de Aracaju, integrando dados oficiais e 
                   trabalhando juntos para melhorar a mobilidade urbana.
                 </p>

@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2 text-primary font-semibold">
               <Bus className="h-6 w-6" />
-              <span className="text-xl font-bold">TransitOptimus</span>
+              <span className="text-xl font-bold">TransJet</span>
             </Link>
             <p className="text-sm text-gray-500 mt-2">
               Sistema Integrado de Transporte Público para a cidade de Aracaju, 
@@ -86,7 +86,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-100 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} TransitOptimus. Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} TransJet. Todos os direitos reservados.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="text-gray-400 hover:text-primary">
